@@ -16,9 +16,9 @@ public class AddressGenerator {
     public static String generateAddress() {
         String city = cities[random.nextInt(cities.length)];
         String street = streets[random.nextInt(streets.length)] + " Street";
-        int number = random.nextInt(300) + 1; // Генерируем случайный номер дома от 1 до 100
+        int number = random.nextInt(300) + 1;
         String state = states[random.nextInt(states.length)];
-        String zipCode = String.format("%05d", random.nextInt(100000)); // Генерируем случайный ZIP-код из 5 цифр
+        String zipCode = String.format("%05d", random.nextInt(100000));
 
         return number + " " + street + ", " + city + " " + state + " " + zipCode;
     }
