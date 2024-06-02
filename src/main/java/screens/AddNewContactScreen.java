@@ -28,6 +28,7 @@ public class AddNewContactScreen extends BaseScreen {
     public AddNewContactScreen fillTheForm(Contact contact){
         waitForAnElement(createButton);
         inputNameField.sendKeys(contact.getName());
+        return new AddNewContactScreen(driver);
     }
 
 }

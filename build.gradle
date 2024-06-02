@@ -20,11 +20,16 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
     testAnnotationProcessor  group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
 
-    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+   // implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 }
 
 test {
     jvmArgs(['--add-opens', 'java.base/java.lang=ALL-UNNAMED'])
     useTestNG()
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+        exceptionFormat "full"
+    }
 
 }
