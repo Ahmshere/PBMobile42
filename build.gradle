@@ -19,8 +19,8 @@ dependencies {
     annotationProcessor  group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
     testAnnotationProcessor  group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
-
-   // implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'
 }
 
 test {

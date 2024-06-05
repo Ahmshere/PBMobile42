@@ -28,7 +28,22 @@ public class AddNewContactScreen extends BaseScreen {
     public AddNewContactScreen fillTheForm(Contact contact){
         waitForAnElement(createButton);
         inputNameField.sendKeys(contact.getName());
-        return new AddNewContactScreen(driver);
+        driver.hideKeyboard();
+        inputLastNameField.sendKeys(contact.getLastName());
+        driver.hideKeyboard();
+        inputEmailField.sendKeys(contact.getEmail());
+        driver.hideKeyboard();
+        inputPhoneField.sendKeys(contact.getPhone());
+        driver.hideKeyboard();
+        inputAddressField.sendKeys(contact.getAddress());
+        driver.hideKeyboard();
+        inputDescriptionField.sendKeys(contact.getDescription());
+        driver.hideKeyboard();
+                return new AddNewContactScreen(driver);
+    }
+    public ContactListScreen submitContact(){
+        createButton.click();
+        return new ContactListScreen(driver);
     }
 
 }

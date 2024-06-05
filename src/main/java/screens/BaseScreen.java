@@ -16,7 +16,7 @@ public class BaseScreen {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
     public void waitForAnElement(MobileElement element){
-        WebDriverWait wait = new WebDriverWait(driver , 5);
+        WebDriverWait wait = new WebDriverWait(driver , 10);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
     public boolean isElementPresent(MobileElement element, String text, int time){
