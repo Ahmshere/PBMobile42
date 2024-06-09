@@ -3,7 +3,10 @@ package screens;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import models.Contact;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class AddNewContactScreen extends BaseScreen {
     public AddNewContactScreen(AppiumDriver<MobileElement> driver) {
@@ -24,6 +27,8 @@ public class AddNewContactScreen extends BaseScreen {
     MobileElement inputDescriptionField;
     @FindBy(id = "com.sheygam.contactapp:id/createBtn")
     MobileElement createButton;
+    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/action_bar']/android.widget.TextView")
+    MobileElement titleText;
 
     public AddNewContactScreen fillTheForm(Contact contact){
         waitForAnElement(createButton);
@@ -41,9 +46,17 @@ public class AddNewContactScreen extends BaseScreen {
         driver.hideKeyboard();
                 return new AddNewContactScreen(driver);
     }
-    public ContactListScreen submitContact(){
+    public <T extends BaseScreen> T submitContact() {
         createButton.click();
-        return new ContactListScreen(driver);
+        List<MobileElement> list = driver.findElements(By.xpath("//*[@resource-id='android:id/alertTitle']"));
+        if (list.size() > 0) {
+            driver.findElement(By.xpath("//*[@resource-id='android:id/button1']")).click();
+            return (T) new AddNewContactScreen(driver);
+        } else {
+            return (T) new ContactListScreen(driver);
+        }
     }
-
+    public boolean isThisTheAddNewContactScreen(){
+        return isElementPresent(titleText, "784",5);
+    }
 }

@@ -20,7 +20,7 @@ public class AppiumConfig {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "Pix6");
+        capabilities.setCapability("deviceName", "emulator-5554");
         capabilities.setCapability("platformVersion", "8.0");
         capabilities.setCapability("appPackage", "com.sheygam.contactapp");
         capabilities.setCapability("appActivity", ".SplashActivity");

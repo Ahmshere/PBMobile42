@@ -1,11 +1,10 @@
 import config.AppiumConfig;
-import helpers.AddressGenerator;
-import helpers.EmailGenerator;
-import helpers.NameAndLastNameGenerator;
-import helpers.PhoneNumberGenerator;
+import enums.ContactField;
+import helpers.*;
 import models.Contact;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import screens.AddNewContactScreen;
 import screens.ContactListScreen;
 import screens.SplashScreen;
 
@@ -26,9 +25,25 @@ public class AddNewContactTests extends AppiumConfig {
         contact.setAddress(AddressGenerator.generateAddress());
         contact.setDescription("test");
 
-        Assert.assertTrue(new ContactListScreen(driver).openNewContactForm()
+        ContactListScreen cls =  new ContactListScreen(driver).openNewContactForm()
                 .fillTheForm(contact)
-                .submitContact()
-                .isContactAdded(contact));
+                .submitContact();
+               Assert.assertTrue(cls.isContactAdded(contact));
     }
+    @Test
+    public void addContactNegative(){
+        new SplashScreen(driver)
+                .switchToAuthenticationScreen()
+                .fillEmailField("mymegamail@mail.com")
+                .fillPasswordField("MyPassword123!")
+                .clickLoginButton();
+        Contact contact = ContactGenerator.createIncorrectContact(ContactField.PHONE_NUMBER, "1");
+        AddNewContactScreen addNewContactScreen = new ContactListScreen(driver)
+                .openNewContactForm()
+                .fillTheForm(contact)
+                .submitContact();
+        Assert.assertTrue(addNewContactScreen.isThisTheAddNewContactScreen());
+
+    }
+
 }
