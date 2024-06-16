@@ -6,6 +6,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import models.Contact;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.support.FindBy;
 
@@ -105,5 +106,49 @@ public class ContactListScreen extends BaseScreen {
     }
     public boolean isNoContactsMessage(){
         return isElementPresent(emptyContactListText, "No Contacts", 5);
+    }
+
+    //********
+    public ContactListScreen scrolling(){
+        waitForAnElement(addContactButton);
+        MobileElement contact = contacts.get(contacts.size()-1);
+
+        Rectangle rectangle = contact.getRect();
+        int x = rectangle.getX()+ rectangle.getWidth()/2;
+        int y = rectangle.getY()+ rectangle.getHeight()/2;
+
+        new TouchAction<>(driver)
+                .longPress(PointOption.point(x,y))
+                .moveTo(PointOption.point(x, 0))
+                .release()
+                .perform();
+        return this;
+    }
+    private boolean isThisTheEndOfTheList(){
+        String beforeScroll = getLastContactText();
+        scrolling();
+        String afterScroll = getLastContactText();
+        return beforeScroll.equals(afterScroll);
+
+    }
+    private String getLastContactText(){
+        return rowName.get(rowName.size()-1).getText()+" "+rowPhone.get(rowPhone.size()-1).getText();
+    }
+    public  void scrollDown(){
+        waitForAnElement(addContactButton);
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+    public boolean isContactAddedScroll(Contact contact) {
+        boolean result = false;
+        while (!result && !isThisTheEndOfTheList()){
+            boolean checkName = checkContainsText(rowName, contact.getName());
+            boolean checkPhone = checkContainsText(rowPhone, contact.getPhone());
+            result = checkName && checkPhone;
+            if(!result){
+                scrollDown();
+            }
+        }
+        return result;
     }
 }
