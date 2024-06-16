@@ -1,5 +1,6 @@
 package screens;
 
+import helpers.ContactGenerator;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -28,6 +29,10 @@ public class ContactListScreen extends BaseScreen {
     List<MobileElement> contacts;
     @FindBy(xpath = "//*[@resource-id='android:id/button1']")
     MobileElement yesButton;
+    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/emptyTxt']")
+    MobileElement emptyContactListText;
+
+    String phoneNumber;
     public boolean isContactListActivityPresent(){
        return isElementPresent(titleViewText, "Contact list", 5);
     }
@@ -53,6 +58,7 @@ public class ContactListScreen extends BaseScreen {
     public ContactListScreen removeAContact() {
         waitForAnElement(addContactButton);
         MobileElement contact = contacts.get(0);
+        phoneNumber = rowPhone.get(0).getText();
 
         Rectangle rectangle = contact.getRect();
         int startX = rectangle.getX()+ rectangle.getWidth()/8;
@@ -68,5 +74,36 @@ public class ContactListScreen extends BaseScreen {
         }
         return this;
 
+    }
+    public boolean isContactRemoved(){
+        return !rowPhone.contains(phoneNumber);
+    }
+    public boolean isContactRemovedList(String name, String lastName, String phone){
+        boolean nameChecked = checkContainsText(rowName, name+" "+lastName);
+        boolean phoneChecked = checkContainsText(rowPhone, phone);
+        return !(nameChecked && phoneChecked);
+    }
+
+    public ContactListScreen addMultipleContacts(int theNumberOfContactsToBeAdded) {
+        while (contacts.size()< theNumberOfContactsToBeAdded){
+            Contact contact = ContactGenerator.createCorrectContact();
+            ContactListScreen cls = new ContactListScreen(driver)
+                    .openNewContactForm()
+                    .fillTheForm(contact)
+                    .submitContact();
+            cls.isContactAdded(contact);
+        }
+        return this;
+    }
+
+    public ContactListScreen removeAllContacts() {
+        waitForAnElement(addContactButton);
+        while (contacts.size()>0){
+            removeAContact();
+        }
+        return this;
+    }
+    public boolean isNoContactsMessage(){
+        return isElementPresent(emptyContactListText, "No Contacts", 5);
     }
 }

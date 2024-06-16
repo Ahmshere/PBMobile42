@@ -45,5 +45,14 @@ public class AddNewContactTests extends AppiumConfig {
         Assert.assertTrue(addNewContactScreen.isThisTheAddNewContactScreen());
 
     }
+    @Test
+    public void addNewContacts(){
+        new SplashScreen(driver)
+                .switchToAuthenticationScreen()
+                .fillEmailField("mymegamail@mail.com")
+                .fillPasswordField("MyPassword123!")
+                .clickLoginButton();
+        new ContactListScreen(driver).addMultipleContacts(3);
+    }
 
 }

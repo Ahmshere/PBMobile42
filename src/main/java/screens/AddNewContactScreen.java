@@ -57,6 +57,6 @@ public class AddNewContactScreen extends BaseScreen {
         }
     }
     public boolean isThisTheAddNewContactScreen(){
-        return isElementPresent(titleText, "784",5);
+        return isElementPresent(titleText, "Add",5);
     }
 }
