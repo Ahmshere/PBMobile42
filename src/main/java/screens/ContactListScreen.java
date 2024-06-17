@@ -86,7 +86,7 @@ public class ContactListScreen extends BaseScreen {
     }
 
     public ContactListScreen addMultipleContacts(int theNumberOfContactsToBeAdded) {
-        while (contacts.size()< theNumberOfContactsToBeAdded){
+        for (int iteration=0; iteration< theNumberOfContactsToBeAdded;iteration++){
             Contact contact = ContactGenerator.createCorrectContact();
             ContactListScreen cls = new ContactListScreen(driver)
                     .openNewContactForm()
@@ -146,7 +146,8 @@ public class ContactListScreen extends BaseScreen {
             boolean checkPhone = checkContainsText(rowPhone, contact.getPhone());
             result = checkName && checkPhone;
             if(!result){
-                scrollDown();
+                //scrollDown();
+                scrolling();
             }
         }
         return result;

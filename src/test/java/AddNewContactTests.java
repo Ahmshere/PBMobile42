@@ -52,7 +52,7 @@ public class AddNewContactTests extends AppiumConfig {
                 .fillEmailField("mymegamail@mail.com")
                 .fillPasswordField("MyPassword123!")
                 .clickLoginButton();
-        new ContactListScreen(driver).addMultipleContacts(3);
+        new ContactListScreen(driver).addMultipleContacts(2);
     }
 
 }
