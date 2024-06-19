@@ -27,7 +27,7 @@ public class AddNewContactTests extends AppiumConfig {
 
         ContactListScreen cls =  new ContactListScreen(driver).openNewContactForm()
                 .fillTheForm(contact)
-                .submitContact();
+                .submitContact(true);
                Assert.assertTrue(cls.isContactAdded(contact));
     }
     @Test
@@ -41,10 +41,14 @@ public class AddNewContactTests extends AppiumConfig {
         AddNewContactScreen addNewContactScreen = new ContactListScreen(driver)
                 .openNewContactForm()
                 .fillTheForm(contact)
-                .submitContact();
-        Assert.assertTrue(addNewContactScreen.isThisTheAddNewContactScreen());
+                .submitContact(false);
+       Assert.assertTrue(addNewContactScreen.isTheErrorScreenPresent("phone"));
+        //Assert.assertTrue(addNewContactScreen.isThisTheAddNewContactScreen());
 
     }
+
+
+
     @Test
     public void addNewContacts(){
         new SplashScreen(driver)

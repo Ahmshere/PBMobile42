@@ -91,7 +91,7 @@ public class ContactListScreen extends BaseScreen {
             ContactListScreen cls = new ContactListScreen(driver)
                     .openNewContactForm()
                     .fillTheForm(contact)
-                    .submitContact();
+                    .submitContact(true);
             cls.isContactAdded(contact);
         }
         return this;
@@ -152,4 +152,33 @@ public class ContactListScreen extends BaseScreen {
         }
         return result;
     }
+
+
+    public EditContactScreen editContact(int index) {
+        waitForAnElement(addContactButton);
+        MobileElement contact = contacts.get(index);
+
+        Rectangle rectangle = contact.getRect();
+        int xStart = rectangle.getX()+ rectangle.getWidth()/8;
+        int y = rectangle.getY()+ rectangle.getHeight()/2;
+        int xEnd = xStart + rectangle.getWidth()*6/8;
+
+
+        new TouchAction<>(driver)
+                .longPress(PointOption.point(xEnd,y))
+                .moveTo(PointOption.point(xStart, 0))
+                .release()
+                .perform();
+        return new EditContactScreen(driver);
+    }
+
+    public boolean isContactContainsText(String newtext, int index) {
+        contacts.get(index).click();
+        Contact contact = new ViewContactScreen(driver).viewContactObject();
+        driver.navigate().back();
+        return contact.toString().contains(newtext);
+    }
+
+
+
 }

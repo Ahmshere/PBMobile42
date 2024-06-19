@@ -17,7 +17,7 @@ public class RemoveContactTest extends AppiumConfig {
                 .clickLoginButton();
         Contact contact = ContactGenerator.createCorrectContact();
 
-        contactListScreen.openNewContactForm().fillTheForm(contact).submitContact();
+        contactListScreen.openNewContactForm().fillTheForm(contact).submitContact(true);
         // Assert.assertTrue(contactListScreen.removeAContact().isContactRemoved());
         Assert.assertTrue(contactListScreen
                 .removeAContact().isContactRemovedList(contact.getName(), contact.getLastName(), contact.getPhone()));
